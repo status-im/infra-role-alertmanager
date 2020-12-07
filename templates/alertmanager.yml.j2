@@ -1,14 +1,14 @@
 ---
 global:
   # SMTP authentication information.
-  smtp_from: '{{ alertmanager_smtp_from }}'
-  smtp_smarthost: '{{ alertmanager_smtp_host }}:{{ alertmanager_smtp_port }}'
-  smtp_auth_username: '{{ alertmanager_smtp_user }}'
-  smtp_auth_password: '{{ alertmanager_smtp_pass }}'
+  smtp_from: '{{ alertmanager_smtp_from | mandatory }}'
+  smtp_smarthost: '{{ alertmanager_smtp_host | mandatory }}:{{ alertmanager_smtp_port | mandatory }}'
+  smtp_auth_username: '{{ alertmanager_smtp_user | mandatory }}'
+  smtp_auth_password: '{{ alertmanager_smtp_pass | mandatory }}'
   smtp_require_tls: true
   # VictorOps configuration
-  victorops_api_key: '{{ alertmanager_victorops_api_key }}'
-  victorops_api_url: '{{ alertmanager_victorops_service_url }}'
+  victorops_api_key: '{{ alertmanager_victorops_api_key | mandatory }}'
+  victorops_api_url: '{{ alertmanager_victorops_service_url | mandatory }}'
 
 route:
   # Default destination fo all alerts
@@ -16,11 +16,11 @@ route:
   # How to group together alerts
   group_by: {{ alertmanager_group_by | to_yaml }}
   # Wait this much before initial notification to group them.
-  group_wait: '{{ alertmanager_group_wait }}'
+  group_wait: '{{ alertmanager_group_wait | mandatory }}'
   # Wait before sending another batch for a group.
-  group_interval: '{{ alertmanager_group_interval }}'
+  group_interval: '{{ alertmanager_group_interval | mandatory }}'
   # Wait this much to resend notifications.
-  repeat_interval: '{{ alertmanager_repeat_interval }}'
+  repeat_interval: '{{ alertmanager_repeat_interval | mandatory }}'
 
   routes:
     # send all notifications to slack too
@@ -29,11 +29,11 @@ route:
 receivers:
   - name: 'admin-email'
     email_configs:
-      - to: '{{ alertmanager_admin_email }}'
+      - to: '{{ alertmanager_admin_email | mandatory }}'
         send_resolved: true
 
   - name: 'victorops-alerts'
     victorops_configs:
-      - routing_key: '{{ alertmanager_victorops_routing_key }}'
-        state_message: '{{ alertmanager_victorops_state_message }}'
-        message_type: '{{ alertmanager_victorops_message_type }}'
+      - routing_key: '{{ alertmanager_victorops_routing_key | mandatory }}'
+        state_message: '{{ alertmanager_victorops_state_message | mandatory }}'
+        message_type: '{{ alertmanager_victorops_message_type | mandatory }}'
