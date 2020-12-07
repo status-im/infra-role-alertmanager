@@ -1,0 +1,38 @@
+global:
+  # SMTP authentication information.
+  smtp_from: '{{ alertmanager_smtp_from }}'
+  smtp_smarthost: '{{ alertmanager_smtp_host }}:{{ alertmanager_smtp_port }}'
+  smtp_auth_username: '{{ alertmanager_smtp_user }}'
+  smtp_auth_password: '{{ alertmanager_smtp_pass }}'
+  smtp_require_tls: true
+  # VictorOps configuration
+  victorops_api_key: '{{ alertmanager_victorops_api_key }}'
+  victorops_api_url: '{{ alertmanager_victorops_service_url }}'
+
+route:
+  # Default destination fo all alerts
+  receiver: 'admin-email'
+  # How to group together alerts
+  group_by: ['alertname', 'cluster']
+  # Wait this much before initial notification to group them.
+  group_wait: 30s
+  # Wait before sending another batch for a group.
+  group_interval: 3m
+  # Wait this much to resend notifications.
+  repeat_interval: 1h
+
+  routes:
+    # send all notifications to slack too
+    - receiver: 'victorops-alerts'
+
+receivers:
+  - name: 'admin-email'
+    email_configs:
+      - to: '{{ alertmanager_admin_email }}'
+        send_resolved: true
+
+  - name: 'victorops-alerts'
+    victorops_configs:
+      - routing_key: '{{ alertmanager_victorops_routing_key }}'
+        state_message: '{{ alertmanager_victorops_state_message }}'
+        message_type: '{{ alertmanager_victorops_message_type }}'

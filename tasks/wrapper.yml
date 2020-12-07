@@ -1,0 +1,8 @@
+---
+- name: Create amtool wrapper
+  copy:
+    content: |
+      #/usr/bin/env bash
+      docker exec alertmanager amtool $@
+    dest: '/usr/local/bin/amtool'
+    mode: 0755

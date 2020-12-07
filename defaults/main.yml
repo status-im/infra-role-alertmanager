@@ -1,0 +1,36 @@
+---
+alertmanager_cont_tag: 'v0.21.0'
+alertmanager_cont_image: 'quay.io/prometheus/alertmanager:{{ alertmanager_cont_tag }}'
+alertmanager_cont_name: 'alertmanager'
+alertmanager_cont_vol: '/docker/{{ alertmanager_cont_name }}'
+alertmanager_cont_log_lvl: info
+
+# port used for the web ui
+alertmanager_webui_port: 9093
+# port used for clustering AlertManager peers
+alertmanager_cluster_port: 9094
+
+alertmanager_smtp_host: ~
+alertmanager_smtp_port: ~
+alertmanager_smtp_from: ~
+alertmanager_smtp_user: ~
+alertmanager_smtp_pass: ~
+
+alertmanager_domain: ~
+alertmanager_url: 'https://{{ alertmanager_domain | mandatory }}/'
+alertmanager_admin_email: ~
+
+# VictorOps paging service
+alertmanager_victorops_api_key: ~
+alertmanager_victorops_service_url: ~
+alertmanager_victorops_routing_key: ~
+alertmanager_victorops_message_type: 'ERROR'
+alertmanager_victorops_state_message: '{% raw %}Alert: {{ .CommonLabels.alertname }}. Summary:{{ .CommonAnnotations.summary }}. RawData: {{ .CommonLabels }}{% endraw %}'
+
+# For discovery of prometheus master nodes
+consul_catalog_url: 'http://localhost:8500/v1/catalog'
+
+# Generic container options
+cont_state: started
+cont_recreate: false
+cont_restart: false

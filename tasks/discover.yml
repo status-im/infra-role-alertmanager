@@ -1,0 +1,21 @@
+---
+- name: Get data centers
+  uri:
+    url: '{{ consul_catalog_url }}/datacenters'
+  register: data_centers
+
+- name: Get AlertManager node addresses
+  uri:
+    url: '{{ consul_catalog_url }}/service/{{ alertmanager_cont_name }}?dc={{ item }}'
+    method: GET
+    validate_certs: no
+  with_items: '{{ data_centers.json }}'
+  register: alertmanager_services
+
+- name: Extract IP addresses
+  set_fact:
+    cluster_peers: |
+      {{ alertmanager_services.results
+      | sum(attribute="json", start=[])
+      | map(attribute="ServiceAddress")
+      | list }}

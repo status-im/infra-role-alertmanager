@@ -1,0 +1,19 @@
+---
+- name: Create Consul service definition
+  include_role: name=consul-service
+  vars:
+    consul_config_name: '{{ alertmanager_cont_name }}'
+    consul_services:
+      - name: '{{ alertmanager_cont_name }}'
+        tags: ['metrics', 'alertmanager']
+        port: '{{ alertmanager_webui_port }}'
+        address: '{{ ansible_local.tinc.vpn_ip }}'
+        checks:
+          - id: alertmanager-status
+            name: Alert Manager status
+            type: http
+            http: 'http://localhost:{{ alertmanager_webui_port }}/api/v1/receivers'
+
+# We need to do this for discover step to work
+- name: Reload Consul right away
+  command: consul reload
