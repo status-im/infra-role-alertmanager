@@ -6,6 +6,7 @@
     owner: 'dockremap'
     group: 'docker'
     recurse: true
+    mode: 0750
   with_items:
     - 'data'
     - 'conf'
@@ -16,6 +17,7 @@
     dest: '{{ alertmanager_service_path }}/conf/{{ item }}'
     owner: 'dockremap'
     group: 'docker'
+    mode: 0640
   register: alertmanager_config
   with_items:
     - 'alertmanager.yml'
