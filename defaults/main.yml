@@ -25,6 +25,15 @@ alertmanager_smtp_from: ~
 alertmanager_smtp_user: ~
 alertmanager_smtp_pass: ~
 
+# OAuth
+alertmanager_oauth_id: ~
+alertmanager_oauth_secret: ~
+alertmanager_oauth_cookie_secret: ~
+alertmanager_oauth_gh_org: ~
+alertmanager_oauth_cont_port: 8092
+alertmanager_oauth_cont_tag: 'v5.0.0'
+alertmanager_oauth_cont_image: 'quay.io/pusher/oauth2_proxy:{{ alertmanager_oauth_cont_tag }}'
+
 # Route configuration
 alertmanager_group_by: ['alertname', 'cluster']
 alertmanager_group_wait: '30s'

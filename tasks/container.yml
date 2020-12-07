@@ -5,7 +5,7 @@
     dest: '{{ alertmanager_compose_file }}'
     owner: 'dockremap'
     group: 'docker'
-    mode: 0644
+    mode: 0640
 
 - name: Create containers
   docker_compose:

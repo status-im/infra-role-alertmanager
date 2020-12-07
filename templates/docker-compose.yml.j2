@@ -2,7 +2,7 @@
 version: '3.7'
 services:
   app:
-    container_name: '{{ alertmanager_service_name }}'
+    container_name: '{{ alertmanager_service_name }}-app'
     image: '{{ alertmanager_cont_image }}'
     user: 'root'
     restart: 'always'
@@ -24,3 +24,25 @@ services:
 {% for peer in alertmanager_cluster_peers %}
       - '--cluster.peer={{ peer.ServiceAddress }}:{{ peer.ServicePort }}' # {{ peer.Node }}
 {% endfor %}
+{% if alertmanager_oauth_id %}
+
+  oauth:
+    container_name: '{{ alertmanager_service_name }}-oauth'
+    image: '{{ alertmanager_oauth_cont_image }}'
+    user: 'root'
+    restart: 'always'
+    ports:
+      - '127.0.0.1:{{ alertmanager_oauth_cont_port }}:{{ alertmanager_oauth_cont_port }}' # Web UI
+    command: |
+      --email-domain='*'
+      --provider='github'
+      --github-org='{{ alertmanager_oauth_gh_org | mandatory }}'
+      --cookie-domain='{{ alertmanager_domain | mandatory }}'
+      --cookie-secret='{{ alertmanager_oauth_cookie_secret | mandatory }}'
+      --client-id='{{ alertmanager_oauth_id | mandatory }}'
+      --client-secret='{{ alertmanager_oauth_secret | mandatory }}'
+      --redirect-url='https://{{ alertmanager_domain }}/oauth2/callback'
+      --http-address='0.0.0.0:{{ alertmanager_oauth_cont_port | mandatory }}'
+      --upstream='http://app:{{ alertmanager_webui_port }}/'
+      --request-logging=false
+{% endif %}

@@ -23,6 +23,14 @@ alertmanager_victorops_service_url: 'https://alert.victorops.com/integrations/ge
 ```
 Take note you will have to create an `alert-manager` routing rule in VictorOps.
 
+There is also optional OAuth Proxy configuration:
+```yaml
+alertmanager_oauth_id: '123qwe123qwe'
+alertmanager_oauth_secret: '123qwe123qwe123qwe123qwe'
+alertmanager_oauth_cookie_secret: '123qwe'
+alertmanager_oauth_gh_org: 'my-gh-org'
+```
+
 # Management
 
 You can manage existing alerts by using the `amtool` on any of the hosts running this:
