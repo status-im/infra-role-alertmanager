@@ -37,6 +37,9 @@ services:
       --email-domain='*'
       --provider='github'
       --github-org='{{ alertmanager_oauth_gh_org | mandatory }}'
+{% if alertmanager_oauth_gh_teams %}
+      --github-team='{{ alertmanager_oauth_gh_teams | join(",") }}'
+{% endif %}
       --cookie-domain='{{ alertmanager_domain | mandatory }}'
       --cookie-secret='{{ alertmanager_oauth_cookie_secret | mandatory }}'
       --client-id='{{ alertmanager_oauth_id | mandatory }}'

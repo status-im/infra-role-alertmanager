@@ -30,6 +30,7 @@ alertmanager_oauth_id: ~
 alertmanager_oauth_secret: ~
 alertmanager_oauth_cookie_secret: ~
 alertmanager_oauth_gh_org: ~
+alertmanager_oauth_gh_teams: []
 alertmanager_oauth_cont_port: 8092
 alertmanager_oauth_cont_tag: 'v5.0.0'
 alertmanager_oauth_cont_image: 'quay.io/pusher/oauth2_proxy:{{ alertmanager_oauth_cont_tag }}'
