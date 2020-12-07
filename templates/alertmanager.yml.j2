@@ -1,3 +1,4 @@
+---
 global:
   # SMTP authentication information.
   smtp_from: '{{ alertmanager_smtp_from }}'
@@ -13,13 +14,13 @@ route:
   # Default destination fo all alerts
   receiver: 'admin-email'
   # How to group together alerts
-  group_by: ['alertname', 'cluster']
+  group_by: {{ alertmanager_group_by | to_yaml }}
   # Wait this much before initial notification to group them.
-  group_wait: 30s
+  group_wait: '{{ alertmanager_group_wait }}'
   # Wait before sending another batch for a group.
-  group_interval: 3m
+  group_interval: '{{ alertmanager_group_interval }}'
   # Wait this much to resend notifications.
-  repeat_interval: 1h
+  repeat_interval: '{{ alertmanager_repeat_interval }}'
 
   routes:
     # send all notifications to slack too

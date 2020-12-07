@@ -20,6 +20,12 @@ alertmanager_domain: ~
 alertmanager_url: 'https://{{ alertmanager_domain | mandatory }}/'
 alertmanager_admin_email: ~
 
+# Route configuration
+alertmanager_group_by: ['alertname', 'cluster']
+alertmanager_group_wait: '30s'
+alertmanager_group_interval: '3m'
+alertmanager_repeat_interval: '1h'
+
 # VictorOps paging service
 alertmanager_victorops_api_key: ~
 alertmanager_victorops_service_url: ~
