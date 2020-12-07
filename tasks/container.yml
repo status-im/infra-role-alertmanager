@@ -1,29 +1,17 @@
 ---
-- name: Start container
-  docker_container:
-    name: '{{ alertmanager_cont_name }}'
-    image: '{{ alertmanager_cont_image }}'
-    user: root
+- name: Create compose file
+  template:
+    src: 'docker-compose.yml.j2'
+    dest: '{{ alertmanager_compose_file }}'
+    owner: 'dockremap'
+    group: 'docker'
+    mode: 0644
+
+- name: Create containers
+  docker_compose:
+    project_src: '{{ alertmanager_service_path }}'
     pull: true
-    restart_policy: always
-    state: '{{ cont_state }}'
-    recreate: '{{ cont_recreate }}'
-    restart: '{{ alertmanager_cont_config.changed | default(cont_restart) }}'
-    ports:
-      - '0.0.0.0:{{ alertmanager_cluster_port }}:{{ alertmanager_cluster_port }}'
-      - '0.0.0.0:{{ alertmanager_webui_port }}:{{ alertmanager_webui_port }}'
-    volumes:
-      - '{{ alertmanager_cont_vol }}/conf/alertmanager.yml:/etc/alertmanager.yml:ro'
-      - '{{ alertmanager_cont_vol }}/conf/amtool.yml:/etc/amtool/config.yml:ro'
-      - '{{ alertmanager_cont_vol }}/data:/data'
-      - '/certs:/certs'
-    command: |
-      --storage.path=/data
-      --log.level={{ alertmanager_cont_log_lvl }}
-      --config.file=/etc/alertmanager.yml
-      --web.external-url={{ alertmanager_url }}
-      --cluster.advertise-address="{{ ansible_local.tinc.vpn_ip }}:{{ alertmanager_cluster_port }}"
-      --cluster.listen-address="0.0.0.0:{{ alertmanager_cluster_port }}"
-      {% for peer in cluster_peers %}
-      --cluster.peer={{ peer }}:{{ alertmanager_cluster_port }}
-      {% endfor %}
+    build: false
+    state: '{{ compose_state }}'
+    restarted: '{{ compose_restart }}'
+    recreate: '{{ alertmanager_config.changed | ternary("always", compose_recreate) }}'

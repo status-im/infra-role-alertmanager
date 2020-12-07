@@ -1,0 +1,26 @@
+---
+version: '3.7'
+services:
+  app:
+    container_name: '{{ alertmanager_service_name }}'
+    image: '{{ alertmanager_cont_image }}'
+    user: 'root'
+    restart: 'always'
+    ports:
+      - '0.0.0.0:{{ alertmanager_webui_port }}:{{ alertmanager_webui_port }}' # Web UI
+      - '0.0.0.0:{{ alertmanager_cluster_port }}:{{ alertmanager_cluster_port }}' # Cluster
+    volumes:
+      - '{{ alertmanager_service_path }}/conf/alertmanager.yml:/etc/alertmanager.yml:ro'
+      - '{{ alertmanager_service_path }}/conf/amtool.yml:/etc/amtool/config.yml:ro'
+      - '{{ alertmanager_service_path }}/data:/data'
+      - '/certs:/certs'
+    command:
+      - '--storage.path=/data'
+      - '--log.level={{ alertmanager_cont_log_lvl }}'
+      - '--config.file=/etc/alertmanager.yml'
+      - '--web.external-url={{ alertmanager_url }}'
+      - '--cluster.advertise-address={{ ansible_local.tinc.vpn_ip }}:{{ alertmanager_cluster_port }}'
+      - '--cluster.listen-address=0.0.0.0:{{ alertmanager_cluster_port }}'
+{% for peer in alertmanager_cluster_peers %}
+      - '--cluster.peer={{ peer.ServiceAddress }}:{{ peer.ServicePort }}' # {{ peer.Node }}
+{% endfor %}

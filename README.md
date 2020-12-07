@@ -30,6 +30,8 @@ You can manage existing alerts by using the `amtool` on any of the hosts running
  > amtool alert
 Alertname        Starts At                Summary
 Test_Alert       2018-07-06 18:30:18 UTC  This is a testing alert!
+```
+```
  > amtool silence
 ID                                    Matchers                Starts At                Ends At                  Updated At               Created By  Comment  
 9635b573-5177-4601-a3b0-ac6a25d0a4ef  alertname=InstanceDown  2018-07-06 12:37:04 UTC  2018-07-06 14:36:05 UTC  2018-07-06 12:37:04 UTC  jakubgs     test

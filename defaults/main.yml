@@ -1,24 +1,29 @@
 ---
+alertmanager_service_name: 'alertmanager'
+alertmanager_service_path: '/docker/{{ alertmanager_service_name }}'
+alertmanager_compose_file: '{{ alertmanager_service_path }}/docker-compose.yml'
+
+# Public Domain
+alertmanager_domain: ~
+alertmanager_url: 'https://{{ alertmanager_domain | mandatory }}/'
+alertmanager_admin_email: ~
+
+# Container
 alertmanager_cont_tag: 'v0.21.0'
 alertmanager_cont_image: 'quay.io/prometheus/alertmanager:{{ alertmanager_cont_tag }}'
-alertmanager_cont_name: 'alertmanager'
-alertmanager_cont_vol: '/docker/{{ alertmanager_cont_name }}'
-alertmanager_cont_log_lvl: info
+alertmanager_cont_log_lvl: 'info'
 
-# port used for the web ui
+# Port used for the web ui
 alertmanager_webui_port: 9093
-# port used for clustering AlertManager peers
+# Port used for clustering AlertManager peers
 alertmanager_cluster_port: 9094
 
+# SMTP
 alertmanager_smtp_host: ~
 alertmanager_smtp_port: ~
 alertmanager_smtp_from: ~
 alertmanager_smtp_user: ~
 alertmanager_smtp_pass: ~
-
-alertmanager_domain: ~
-alertmanager_url: 'https://{{ alertmanager_domain | mandatory }}/'
-alertmanager_admin_email: ~
 
 # Route configuration
 alertmanager_group_by: ['alertname', 'cluster']
@@ -37,6 +42,6 @@ alertmanager_victorops_state_message: '{% raw %}Alert: {{ .CommonLabels.alertnam
 consul_catalog_url: 'http://localhost:8500/v1/catalog'
 
 # Generic container options
-cont_state: started
-cont_recreate: false
-cont_restart: false
+compose_recreate: 'smart'
+compose_state: 'present'
+compose_restart: false

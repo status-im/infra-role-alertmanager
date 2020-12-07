@@ -1,22 +1,22 @@
 ---
 - name: Create container directories
   file:
-    path: '{{ alertmanager_cont_vol }}/{{ item }}'
+    path: '{{ alertmanager_service_path }}/{{ item }}'
     state: 'directory'
     owner: 'dockremap'
     group: 'docker'
     recurse: true
   with_items:
-    - data
-    - conf
+    - 'data'
+    - 'conf'
 
 - name: Create config files
   template:
     src: '{{ item }}.j2'
-    dest: '{{ alertmanager_cont_vol }}/conf/{{ item }}'
+    dest: '{{ alertmanager_service_path }}/conf/{{ item }}'
     owner: 'dockremap'
     group: 'docker'
-  register: alertmanager_cont_config
+  register: alertmanager_config
   with_items:
     - 'alertmanager.yml'
     - 'amtool.yml'
