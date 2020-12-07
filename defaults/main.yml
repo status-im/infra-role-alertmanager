@@ -44,7 +44,7 @@ alertmanager_repeat_interval: '1h'
 alertmanager_victorops_api_key: ~
 alertmanager_victorops_service_url: ~
 alertmanager_victorops_routing_key: ~
-alertmanager_victorops_message_type: 'ERROR'
+alertmanager_victorops_message_type: 'CRITICAL' # CRITICAL, WARNING, INFO
 alertmanager_victorops_state_message: '{% raw %}Alert: {{ .CommonLabels.alertname }}. Summary:{{ .CommonAnnotations.summary }}. RawData: {{ .CommonLabels }}{% endraw %}'
 
 # For discovery of prometheus master nodes

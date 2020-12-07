@@ -11,9 +11,9 @@ global:
   victorops_api_url: '{{ alertmanager_victorops_service_url | mandatory }}'
 
 route:
-  # Default destination fo all alerts
+  # Default destination fo all alerts not matching any routes.
   receiver: 'admin-email'
-  # How to group together alerts
+  # How to group together alerts.
   group_by: {{ alertmanager_group_by | to_yaml }}
   # Wait this much before initial notification to group them.
   group_wait: '{{ alertmanager_group_wait | mandatory }}'
@@ -23,7 +23,7 @@ route:
   repeat_interval: '{{ alertmanager_repeat_interval | mandatory }}'
 
   routes:
-    # send all notifications to slack too
+    # send all notifications to VictorOps.
     - receiver: 'victorops-alerts'
 
 receivers:
