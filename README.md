@@ -8,13 +8,18 @@ The bare minimum should be:
 ```yml
 alertmanager_domain: 'alerts.example.org'
 alertmanager_admin_email: 'admin@example.org'
+
+# SMTP fallback
+alertmanager_admin_email: 'admin@example.org'
 alertmanager_smtp_host: smtp.mail.example.org'
 alertmanager_smtp_from: 'alerts@example.org'
 alertmanager_smtp_user: 'secret-smtp-user'
 alertmanager_smtp_pass: 'secret-smtp-pass'
 
+# VictorOps API
 alertmanager_victorops_api_key: 'secret-victorops-api-key'
 alertmanager_victorops_routing_key:  'alert-manager'
+alertmanager_victorops_service_url: 'https://alert.victorops.com/integrations/generic/123123123/alert/'
 ```
 Take note you will have to create an `alert-manager` routing rule in VictorOps.
 
