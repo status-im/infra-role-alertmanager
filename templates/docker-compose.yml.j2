@@ -22,7 +22,7 @@ services:
       - '--cluster.advertise-address={{ ansible_local.tinc.vpn_ip }}:{{ alertmanager_cluster_port }}'
       - '--cluster.listen-address=0.0.0.0:{{ alertmanager_cluster_port }}'
 {% for peer in alertmanager_cluster_peers %}
-      - '--cluster.peer={{ peer.ServiceAddress }}:{{ peer.ServicePort }}' # {{ peer.Node }}
+      - '--cluster.peer={{ peer.ServiceAddress }}:{{ alertmanager_cluster_port }}' # {{ peer.Node }}
 {% endfor %}
 {% if alertmanager_oauth_id %}
 
