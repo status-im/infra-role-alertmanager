@@ -1,6 +1,6 @@
 ---
-#- include_tasks: consul.yml
+- include_tasks: consul.yml
 - include_tasks: discover.yml
 - include_tasks: config.yml
 - include_tasks: container.yml
-#- include_tasks: wrapper.yml
+- include_tasks: wrapper.yml

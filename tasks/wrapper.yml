@@ -3,6 +3,6 @@
   copy:
     content: |
       #/usr/bin/env bash
-      docker exec alertmanager amtool $@
+      docker exec {{ alertmanager_service_name }}-app amtool $@
     dest: '/usr/local/bin/amtool'
     mode: 0755
