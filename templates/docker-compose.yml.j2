@@ -8,7 +8,8 @@ services:
     restart: 'always'
     ports:
       - '0.0.0.0:{{ alertmanager_webui_port }}:{{ alertmanager_webui_port }}' # Web UI
-      - '0.0.0.0:{{ alertmanager_cluster_port }}:{{ alertmanager_cluster_port }}' # Cluster
+      - '0.0.0.0:{{ alertmanager_cluster_port }}:{{ alertmanager_cluster_port }}/tcp' # Cluster
+      - '0.0.0.0:{{ alertmanager_cluster_port }}:{{ alertmanager_cluster_port }}/udp' # Cluster
     volumes:
       - '{{ alertmanager_service_path }}/conf/alertmanager.yml:/etc/alertmanager.yml:ro'
       - '{{ alertmanager_service_path }}/conf/amtool.yml:/etc/amtool/config.yml:ro'
