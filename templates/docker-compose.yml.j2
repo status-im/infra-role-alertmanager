@@ -17,11 +17,13 @@ services:
       - '/certs:/certs'
     command:
       - '--storage.path=/data'
-      - '--log.level={{ alertmanager_cont_log_lvl }}'
       - '--config.file=/etc/alertmanager.yml'
+      - '--log.level={{ alertmanager_cont_log_lvl }}'
       - '--web.external-url={{ alertmanager_url }}'
       - '--cluster.advertise-address={{ ansible_local.tinc.vpn_ip }}:{{ alertmanager_cluster_port }}'
       - '--cluster.listen-address=0.0.0.0:{{ alertmanager_cluster_port }}'
+      - '--cluster.probe-timeout={{ alertmanager_probe_timeout }}'
+      - '--cluster.probe-interval={{ alertmanager_probe_interval }}'
 {% for peer in alertmanager_cluster_peers %}
       - '--cluster.peer={{ peer.ServiceAddress }}:{{ alertmanager_cluster_port }}' # {{ peer.Node }}
 {% endfor %}

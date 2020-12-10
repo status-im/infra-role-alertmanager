@@ -17,6 +17,10 @@ alertmanager_cont_log_lvl: 'info'
 alertmanager_webui_port: 9093
 # Port used for clustering AlertManager peers
 alertmanager_cluster_port: 9094
+# Time to wait for ack before marking node unhealthy
+alertmanager_probe_timeout: '1000ms'
+# Interval between random node probes
+alertmanager_probe_interval: '5s'
 
 # SMTP
 alertmanager_smtp_host: ~
