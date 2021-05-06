@@ -10,7 +10,7 @@ alertmanager_admin_email: ~
 
 # Container
 alertmanager_cont_tag: 'v0.21.0'
-alertmanager_cont_image: 'quay.io/prometheus/alertmanager:{{ alertmanager_cont_tag }}'
+alertmanager_cont_image: 'prom/alertmanager:{{ alertmanager_cont_tag }}'
 alertmanager_cont_log_lvl: 'info'
 
 # Port used for the web ui
