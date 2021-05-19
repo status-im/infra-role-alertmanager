@@ -7,7 +7,7 @@
       - name: '{{ alertmanager_service_name }}'
         tags: ['metrics', 'alertmanager']
         port: '{{ alertmanager_webui_port }}'
-        address: '{{ ansible_local.tinc.vpn_ip }}'
+        address: '{{ ansible_local.wireguard.vpn_ip }}'
         checks:
           - id: alertmanager-status
             name: Alert Manager status

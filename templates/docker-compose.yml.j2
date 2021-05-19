@@ -20,7 +20,7 @@ services:
       - '--config.file=/etc/alertmanager.yml'
       - '--log.level={{ alertmanager_cont_log_lvl }}'
       - '--web.external-url={{ alertmanager_url }}'
-      - '--cluster.advertise-address={{ ansible_local.tinc.vpn_ip }}:{{ alertmanager_cluster_port }}'
+      - '--cluster.advertise-address={{ ansible_local.wireguard.vpn_ip }}:{{ alertmanager_cluster_port }}'
       - '--cluster.listen-address=0.0.0.0:{{ alertmanager_cluster_port }}'
       - '--cluster.probe-timeout={{ alertmanager_probe_timeout }}'
       - '--cluster.probe-interval={{ alertmanager_probe_interval }}'

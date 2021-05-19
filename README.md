@@ -47,7 +47,7 @@ ID                                    Matchers                Starts At         
 
 # Details
 
-AlertManager runs in a cluster to achieve high availability. The peer connect via [Tinc VPN](https://github.com/status-im/infra-role-bootstrap/tree/master/tasks/tinc).
+AlertManager runs in a cluster to achieve high availability. The peer connect via [WireGuard VPN](https://github.com/status-im/infra-role-wireguard).
 The service listens on `:9093` and the Prometheus instance connects to that port via the VPN to inform it of threshold breaches.
 
 The main configuration resides in [`templates/alertmanager.yml.j2`](templates/alertmanager.yml.j2).
