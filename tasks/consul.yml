@@ -16,4 +16,6 @@
 
 # We need to do this for discover step to work
 - name: Reload Consul right away
-  command: consul reload
+  systemd:
+    name: 'consul'
+    state: 'reloaded'
