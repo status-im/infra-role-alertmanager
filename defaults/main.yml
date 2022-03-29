@@ -40,7 +40,7 @@ alertmanager_oauth_cont_tag: 'v7.2.1-amd64'
 alertmanager_oauth_cont_image: 'quay.io/oauth2-proxy/oauth2-proxy:{{ alertmanager_oauth_cont_tag }}'
 
 # Route configuration
-alertmanager_group_by: ['alertname', 'cluster']
+alertmanager_group_by: ['alertname', 'fleet']
 alertmanager_group_wait: '30s'
 alertmanager_group_interval: '3m'
 alertmanager_repeat_interval: '1h'
