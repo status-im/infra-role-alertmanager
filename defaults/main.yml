@@ -50,7 +50,20 @@ alertmanager_victorops_api_key: ~
 alertmanager_victorops_service_url: ~
 alertmanager_victorops_routing_key: ~
 alertmanager_victorops_message_type: 'CRITICAL' # CRITICAL, WARNING, INFO
-alertmanager_victorops_state_message: '{% raw %}Alert: {{ .CommonLabels.alertname }}. Summary:{{ .CommonAnnotations.summary }}. RawData: {{ .CommonLabels }}{% endraw %}'
+alertmanager_victorops_monitoring_tool: 'metrics'
+alertmanager_victorops_state_message: |
+  {% raw %}
+  {{ .CommonLabels.alertname }}:
+  {{ .CommonAnnotations.summary }}.
+  Common: {{ .CommonLabels }}
+  Group: {{ .GroupLabels }}
+  {% endraw %}
+
+alertmanager_victorops_display_name: >-
+  {% raw %}
+  {{ .CommonLabels.datacenter }}.{{ .GroupLabels.fleet }}
+  ({{ .GroupLabels.alertname }})
+  {% endraw %}
 
 # For discovery of prometheus master nodes
 consul_catalog_url: 'http://localhost:8500/v1/catalog'
