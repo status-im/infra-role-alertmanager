@@ -37,7 +37,7 @@ services:
     user: 'root'
     restart: 'always'
     ports:
-      - '127.0.0.1:{{ alertmanager_oauth_cont_port }}:{{ alertmanager_oauth_cont_port }}' # Web UI
+      - '0.0.0.0:{{ alertmanager_oauth_cont_port }}:{{ alertmanager_oauth_cont_port }}' # Web UI
     command: |
       --email-domain='*'
       --provider='github'
