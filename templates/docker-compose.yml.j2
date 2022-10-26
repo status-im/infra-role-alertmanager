@@ -18,6 +18,7 @@ services:
     command:
       - '--storage.path=/data'
       - '--config.file=/etc/alertmanager.yml'
+      - '--log.format={{ alertmanager_cont_log_fmt }}'
       - '--log.level={{ alertmanager_cont_log_lvl }}'
       - '--web.external-url={{ alertmanager_url }}'
       - '--cluster.advertise-address={{ ansible_local.wireguard.vpn_ip }}:{{ alertmanager_cluster_port }}'
