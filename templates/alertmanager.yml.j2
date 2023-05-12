@@ -23,19 +23,33 @@ route:
   repeat_interval: '{{ alertmanager_repeat_interval | mandatory }}'
 
   routes:
-    # send all notifications to VictorOps.
+{% if alertmanager_victorops_enabled %}
     - receiver: 'victorops-alerts'
+      continue: true
+{% endif %}
+{% for extra_receiver in alertmanager_smtp_receivers_extra %}
+    - receiver: '{{ extra_receiver.name }}'
+      continue: true
+{% endfor %}
 
 receivers:
   - name: 'admin-email'
     email_configs:
-      - to: '{{ alertmanager_admin_email | mandatory }}'
-        send_resolved: true
+    - to: '{{ alertmanager_admin_email | mandatory }}'
+      send_resolved: true
+{% if alertmanager_victorops_enabled %}
 
   - name: 'victorops-alerts'
     victorops_configs:
-      - routing_key: '{{ alertmanager_victorops_routing_key | mandatory }}'
-        message_type: '{{ alertmanager_victorops_message_type | mandatory }}'
-        monitoring_tool: '{{ alertmanager_victorops_monitoring_tool | mandatory }}'
-        entity_display_name: '{{ alertmanager_victorops_display_name | mandatory | trim }}'
-        state_message: '{{ alertmanager_victorops_state_message | mandatory | trim }}'
+    - routing_key: '{{ alertmanager_victorops_routing_key | mandatory }}'
+      message_type: '{{ alertmanager_victorops_message_type | mandatory }}'
+      monitoring_tool: '{{ alertmanager_victorops_monitoring_tool | mandatory }}'
+      entity_display_name: '{{ alertmanager_victorops_display_name | mandatory | trim }}'
+      state_message: '{{ alertmanager_victorops_state_message | mandatory | trim }}'
+{% endif %}
+{% if alertmanager_smtp_receivers_extra|length > 0 %}
+{% filter indent(width=2) %}
+
+{{ alertmanager_smtp_receivers_extra | to_nice_yaml(indent=2) | trim }}
+{% endfilter %}
+{% endif %}

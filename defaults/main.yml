@@ -24,11 +24,16 @@ alertmanager_probe_timeout: '1000ms'
 alertmanager_probe_interval: '5s'
 
 # SMTP
-alertmanager_smtp_host: ~
-alertmanager_smtp_port: ~
-alertmanager_smtp_from: ~
-alertmanager_smtp_user: ~
-alertmanager_smtp_pass: ~
+#alertmanager_smtp_host: ~
+#alertmanager_smtp_port: ~
+#alertmanager_smtp_from: ~
+#alertmanager_smtp_user: ~
+#alertmanager_smtp_pass: ~
+alertmanager_smtp_receivers_extra: []
+#  - name: 'devops'
+#    email_configs:
+#      - to: 'devops@example.org'
+#        send_resolved: true
 
 # OAuth
 alertmanager_oauth_id: ~
@@ -47,9 +52,10 @@ alertmanager_group_interval: '3m'
 alertmanager_repeat_interval: '1h'
 
 # VictorOps paging service
-alertmanager_victorops_api_key: ~
-alertmanager_victorops_service_url: ~
-alertmanager_victorops_routing_key: ~
+alertmanager_victorops_enabled: false
+#alertmanager_victorops_api_key: ~
+#alertmanager_victorops_service_url: ~
+#alertmanager_victorops_routing_key: ~
 alertmanager_victorops_message_type: 'CRITICAL' # CRITICAL, WARNING, INFO
 alertmanager_victorops_monitoring_tool: 'metrics'
 alertmanager_victorops_state_message: |
