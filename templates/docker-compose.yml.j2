@@ -30,28 +30,3 @@ services:
       - '--cluster.peer={{ peer.ServiceAddress }}:{{ alertmanager_cluster_port }}' # {{ peer.Node }}
 {% endif %}
 {% endfor %}
-{% if alertmanager_oauth_id %}
-
-  oauth:
-    container_name: '{{ alertmanager_service_name }}-oauth'
-    image: '{{ alertmanager_oauth_cont_image }}'
-    user: 'root'
-    restart: 'always'
-    ports:
-      - '0.0.0.0:{{ alertmanager_oauth_cont_port }}:{{ alertmanager_oauth_cont_port }}' # Web UI
-    command: |
-      --email-domain='*'
-      --provider='github'
-      --github-org='{{ alertmanager_oauth_gh_org | mandatory }}'
-{% if alertmanager_oauth_gh_teams %}
-      --github-team='{{ alertmanager_oauth_gh_teams | join(",") }}'
-{% endif %}
-      --cookie-domain='{{ alertmanager_domain | mandatory }}'
-      --cookie-secret='{{ alertmanager_oauth_cookie_secret | mandatory }}'
-      --client-id='{{ alertmanager_oauth_id | mandatory }}'
-      --client-secret='{{ alertmanager_oauth_secret | mandatory }}'
-      --redirect-url='https://{{ alertmanager_domain }}/oauth2/callback'
-      --http-address='0.0.0.0:{{ alertmanager_oauth_cont_port | mandatory }}'
-      --upstream='http://app:{{ alertmanager_webui_port }}/'
-      --request-logging=false
-{% endif %}

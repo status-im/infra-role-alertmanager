@@ -14,18 +14,6 @@
             type: 'http'
             http: 'http://localhost:{{ alertmanager_webui_port }}/api/v1/receivers'
 
-      - name: '{{ alertmanager_service_name }}-oauth'
-        tags: ['oauth-proxy', 'alertmanager', 'ssl-proxy-backend']
-        port: '{{ alertmanager_oauth_cont_port }}'
-        address: '{{ ansible_local.wireguard.vpn_ip }}'
-        meta:
-          proxy_fqdn: '{{ alertmanager_domain | mandatory }}'
-        checks:
-          - id:   '{{ alertmanager_service_name }}-oauth-health'
-            name: 'AlertManager OAuth Health'
-            type: 'http'
-            http: 'http://localhost:{{ alertmanager_oauth_cont_port }}/ping'
-
 # We need to do this for discover step to work
 - name: Reload Consul right away
   systemd:
