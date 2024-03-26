@@ -1,0 +1,15 @@
+{{ define "discord.custom.title" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }}{{ end }}
+
+{{ define "__text_alert_description_list" }}{{ range . }}- [{{ .Annotations.description }}]({{ .GeneratorURL }})
+{{ end }}{{ end }}
+
+{{ define "discord.custom.message" }}
+{{ if gt (len .Alerts.Firing) 0 }}
+Alerts Firing:
+{{ template "__text_alert_description_list" .Alerts.Firing }}
+{{ end }}
+{{ if gt (len .Alerts.Resolved) 0 }}
+Alerts Resolved:
+{{ template "__text_alert_description_list" .Alerts.Resolved }}
+{{ end }}
+{{ end }}

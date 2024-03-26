@@ -9,7 +9,7 @@
     mode: 0750
   with_items:
     - 'data'
-    - 'conf'
+    - 'conf/templates'
 
 - name: Create config files
   template:
@@ -22,3 +22,11 @@
   with_items:
     - 'alertmanager.yml'
     - 'amtool.yml'
+
+- name: Create template file
+  copy:
+    src: 'custom.tmpl'
+    dest: '{{ alertmanager_service_path }}/conf/templates/custom.tmpl'
+    owner: 'dockremap'
+    group: 'docker'
+    mode: 0640

@@ -23,14 +23,15 @@ route:
   repeat_interval: '{{ alertmanager_repeat_interval | mandatory }}'
 
   routes:
+{% for extra_receiver in alertmanager_receivers_extra %}
+{% filter indent(width=6) %}
+    - {{ {'receiver': extra_receiver.name} | combine(extra_receiver.routes) | to_nice_yaml(sort_keys=false) }}
+{% endfilter %}
+{% endfor %}
 {% if alertmanager_victorops_enabled %}
     - receiver: 'victorops-alerts'
       continue: true
 {% endif %}
-{% for extra_receiver in alertmanager_smtp_receivers_extra %}
-    - receiver: '{{ extra_receiver.name }}'
-      continue: true
-{% endfor %}
 
 receivers:
   - name: 'admin-email'
@@ -47,9 +48,12 @@ receivers:
       entity_display_name: '{{ alertmanager_victorops_display_name | mandatory | trim }}'
       state_message: '{{ alertmanager_victorops_state_message | mandatory | trim }}'
 {% endif %}
-{% if alertmanager_smtp_receivers_extra|length > 0 %}
-{% filter indent(width=2) %}
 
-{{ alertmanager_smtp_receivers_extra | to_nice_yaml(indent=2) | trim }}
+{% for extra_receiver in alertmanager_receivers_extra %}
+{% filter indent(width=4) %}
+  - {{ {'name': extra_receiver.name} | combine(extra_receiver.receivers) | to_nice_yaml(sort_keys=false, indent=1) }}
 {% endfilter %}
-{% endif %}
+{% endfor %}
+
+templates:
+  - '/etc/alertmanager/templates/custom.tmpl'

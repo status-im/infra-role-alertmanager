@@ -13,6 +13,7 @@ services:
     volumes:
       - '{{ alertmanager_service_path }}/conf/alertmanager.yml:/etc/alertmanager.yml:ro'
       - '{{ alertmanager_service_path }}/conf/amtool.yml:/etc/amtool/config.yml:ro'
+      - '{{ alertmanager_service_path }}/conf/templates:/etc/alertmanager/templates:ro'
       - '{{ alertmanager_service_path }}/data:/data'
       - '/certs:/certs'
     command:

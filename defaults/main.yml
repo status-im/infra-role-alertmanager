@@ -29,11 +29,14 @@ alertmanager_probe_interval: '5s'
 #alertmanager_smtp_from: ~
 #alertmanager_smtp_user: ~
 #alertmanager_smtp_pass: ~
-alertmanager_smtp_receivers_extra: []
+alertmanager_receivers_extra: []
 #  - name: 'devops'
-#    email_configs:
-#      - to: 'devops@example.org'
-#        send_resolved: true
+#    routes:
+#      continue: true
+#    receivers:
+#      email_configs:
+#        - to: 'devops@example.org'
+#          send_resolved: true
 
 # OAuth
 alertmanager_oauth_compose_file: '{{ alertmanager_service_path }}/docker-compose.oauth.yml'
