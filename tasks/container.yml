@@ -8,7 +8,7 @@
     mode: 0640
 
 - name: Create OAuth compose file
-  include_role: name=oauth-proxy
+  include_role: name=infra-role-oauth-proxy
   vars:
     oauth_service_name:  '{{ alertmanager_service_name }}-oauth'
     oauth_service_path:  '{{ alertmanager_service_path }}'
