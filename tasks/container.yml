@@ -10,18 +10,22 @@
 - name: Create OAuth compose file
   include_role: name=infra-role-oauth-proxy
   vars:
-    oauth_service_name:  '{{ alertmanager_service_name }}-oauth'
-    oauth_service_path:  '{{ alertmanager_service_path }}'
-    oauth_compose_path:  '{{ alertmanager_oauth_compose_file }}'
-    oauth_domain:        '{{ alertmanager_domain | mandatory }}'
-    oauth_github_org:    '{{ alertmanager_oauth_gh_org | mandatory }}'
-    oauth_github_teams:  '{{ alertmanager_oauth_gh_teams | mandatory }}'
-    oauth_id:            '{{ alertmanager_oauth_id | mandatory }}'
-    oauth_secret:        '{{ alertmanager_oauth_secret | mandatory }}'
-    oauth_cookie_secret: '{{ alertmanager_oauth_cookie_secret | mandatory }}'
-    oauth_local_port:    '{{ alertmanager_oauth_cont_port | mandatory }}'
-    oauth_local_addr:    '0.0.0.0'
-    oauth_upstream_url:  'http://app:{{ alertmanager_webui_port }}/'
+    oauth_service_name:    '{{ alertmanager_service_name }}-oauth'
+    oauth_service_path:    '{{ alertmanager_service_path }}'
+    oauth_compose_path:    '{{ alertmanager_oauth_compose_file }}'
+    oauth_provider:        '{{ alertmanager_oauth_provider | mandatory }}'
+    oauth_domain:          '{{ alertmanager_domain | mandatory }}'
+    oauth_github_org:      '{{ alertmanager_oauth_gh_org }}'
+    oauth_github_teams:    '{{ alertmanager_oauth_gh_teams }}'
+    oauth_keycloak_realm:  '{{ alertmanager_oauth_keycloak_realm }}'
+    oauth_keycloak_groups: '{{ alertmanager_oauth_keycloak_groups }}'
+    oauth_keycloak_roles:  '{{ alertmanager_oauth_keycloak_roles }}'
+    oauth_id:              '{{ alertmanager_oauth_id | mandatory }}'
+    oauth_secret:          '{{ alertmanager_oauth_secret | mandatory }}'
+    oauth_cookie_secret:   '{{ alertmanager_oauth_cookie_secret | mandatory }}'
+    oauth_local_port:      '{{ alertmanager_oauth_cont_port | mandatory }}'
+    oauth_local_addr:      '0.0.0.0'
+    oauth_upstream_url:    'http://app:{{ alertmanager_webui_port }}/'
 
 - name: Create containers
   docker_compose:
