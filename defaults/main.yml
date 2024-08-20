@@ -39,13 +39,17 @@ alertmanager_receivers_extra: []
 #          send_resolved: true
 
 # OAuth
+alertmanager_oauth_provider: 'keycloak-oidc'
 alertmanager_oauth_compose_file: '{{ alertmanager_service_path }}/docker-compose.oauth.yml'
 alertmanager_oauth_cont_port: 8092
 #alertmanager_oauth_id: ~
 #alertmanager_oauth_secret: ~
 #alertmanager_oauth_cookie_secret: ~
-#alertmanager_oauth_gh_org: ~
+alertmanager_oauth_gh_org: 'status-im'
 alertmanager_oauth_gh_teams: []
+alertmanager_oauth_keycloak_realm: 'logos-co'
+alertmanager_oauth_keycloak_groups: []
+alertmanager_oauth_keycloak_roles: []
 
 # Route configuration
 alertmanager_group_by: ['alertname', 'fleet']
