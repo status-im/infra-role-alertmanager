@@ -27,7 +27,7 @@ services:
       - '--cluster.probe-timeout={{ alertmanager_probe_timeout }}'
       - '--cluster.probe-interval={{ alertmanager_probe_interval }}'
 {% for peer in alertmanager_cluster_peers %}
-{% if peer.Node != hostname %}
+{% if peer.Node != inventory_hostname %}
       - '--cluster.peer={{ peer.ServiceAddress }}:{{ alertmanager_cluster_port }}' # {{ peer.Node }}
 {% endif %}
 {% endfor %}
