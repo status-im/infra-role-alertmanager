@@ -28,11 +28,9 @@
     oauth_upstream_url:    'http://app:{{ alertmanager_webui_port }}/'
 
 - name: Create containers
-  docker_compose:
+  community.docker.docker_compose_v2:
     project_src: '{{ alertmanager_service_path }}'
     files: ['{{ alertmanager_compose_file }}', '{{ alertmanager_oauth_compose_file }}']
-    pull: true
-    build: false
-    state: '{{ compose_state }}'
-    restarted: '{{ compose_restart }}'
-    recreate: '{{ alertmanager_config.changed | ternary("always", compose_recreate) }}'
+    recreate: '{{ compose_recreate }}'
+    pull:     '{{ compose_pull }}'
+    state:    '{{ "restarted" if alertmanager_config.changed else compose_state }}'

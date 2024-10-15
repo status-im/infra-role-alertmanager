@@ -81,7 +81,7 @@ alertmanager_victorops_display_name: >-
 # For discovery of prometheus master nodes
 consul_catalog_url: 'http://localhost:8500/v1/catalog'
 
-# Generic container options
-compose_recreate: 'smart'
+# general container management
+compose_recreate: 'auto'
 compose_state: 'present'
-compose_restart: false
+compose_pull: 'always'
