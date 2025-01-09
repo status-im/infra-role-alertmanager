@@ -13,6 +13,7 @@ alertmanager_cont_tag: 'v0.25.0'
 alertmanager_cont_image: 'prom/alertmanager:{{ alertmanager_cont_tag }}'
 alertmanager_cont_log_lvl: 'info'
 alertmanager_cont_log_fmt: 'json'
+alertmanager_cont_name: '{{ alertmanager_service_name }}-app'
 
 # Port used for the web ui
 alertmanager_webui_port: 9093

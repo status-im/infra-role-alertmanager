@@ -25,7 +25,7 @@
     oauth_cookie_secret:   '{{ alertmanager_oauth_cookie_secret | mandatory }}'
     oauth_local_port:      '{{ alertmanager_oauth_cont_port | mandatory }}'
     oauth_local_addr:      '0.0.0.0'
-    oauth_upstream_url:    'http://app:{{ alertmanager_webui_port }}/'
+    oauth_upstream_url:    'http://{{ alertmanager_service_name }}:{{ alertmanager_webui_port }}/'
 
 - name: Create containers
   community.docker.docker_compose_v2:

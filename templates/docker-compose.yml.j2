@@ -1,8 +1,8 @@
 ---
 version: '3.7'
 services:
-  app:
-    container_name: '{{ alertmanager_service_name }}-app'
+  '{{ alertmanager_service_name }}':
+    container_name: '{{ alertmanager_cont_name }}'
     image: '{{ alertmanager_cont_image }}'
     user: 'root'
     restart: 'always'
