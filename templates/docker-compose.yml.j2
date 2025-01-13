@@ -16,6 +16,9 @@ services:
       - '{{ alertmanager_service_path }}/conf/templates:/etc/alertmanager/templates:ro'
       - '{{ alertmanager_service_path }}/data:/data'
       - '/certs:/certs'
+{% if alertmanager_cont_networks %}
+    networks: {{ alertmanager_cont_networks | to_json }}
+{% endif %}
     command:
       - '--storage.path=/data'
       - '--config.file=/etc/alertmanager.yml'
@@ -31,3 +34,11 @@ services:
       - '--cluster.peer={{ peer.ServiceAddress }}:{{ alertmanager_cluster_port }}' # {{ peer.Node }}
 {% endif %}
 {% endfor %}
+{% if alertmanager_cont_networks %}
+
+networks:
+{% for network in alertmanager_cont_networks %}
+  {{network}}:
+    external: true
+{% endfor %}
+{% endif %}

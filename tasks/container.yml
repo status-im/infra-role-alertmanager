@@ -26,7 +26,7 @@
     oauth_local_port:      '{{ alertmanager_oauth_cont_port | mandatory }}'
     oauth_local_addr:      '0.0.0.0'
     oauth_upstream_url:    'http://{{ alertmanager_service_name }}:{{ alertmanager_webui_port }}/'
-    oauth_compose_skip_start: '{{ alertmanager_compose_skip_start }}'
+    oauth_cont_networks:   '{{ alertmanager_cont_networks }}'
 
 - name: Create containers
   community.docker.docker_compose_v2:
@@ -35,4 +35,3 @@
     recreate: '{{ compose_recreate }}'
     pull:     '{{ compose_pull }}'
     state:    '{{ "restarted" if alertmanager_config.changed else compose_state }}'
-  when: not alertmanager_compose_skip_start

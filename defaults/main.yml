@@ -14,6 +14,7 @@ alertmanager_cont_image: 'prom/alertmanager:{{ alertmanager_cont_tag }}'
 alertmanager_cont_log_lvl: 'info'
 alertmanager_cont_log_fmt: 'json'
 alertmanager_cont_name: '{{ alertmanager_service_name }}-app'
+alertmanager_cont_networks: []
 
 # Port used for the web ui
 alertmanager_webui_port: 9093
@@ -83,7 +84,6 @@ alertmanager_victorops_display_name: >-
 # For discovery of prometheus master nodes
 consul_catalog_url: 'http://localhost:8500/v1/catalog'
 
-alertmanager_compose_skip_start: false
 # general container management
 compose_recreate: 'auto'
 compose_state: 'present'
