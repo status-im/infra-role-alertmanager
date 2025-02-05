@@ -25,20 +25,8 @@ alertmanager_probe_timeout: '1000ms'
 # Interval between random node probes
 alertmanager_probe_interval: '5s'
 
-# SMTP
-#alertmanager_smtp_host: ~
-#alertmanager_smtp_port: ~
-#alertmanager_smtp_from: ~
-#alertmanager_smtp_user: ~
-#alertmanager_smtp_pass: ~
-alertmanager_receivers_extra: []
-#  - name: 'devops'
-#    routes:
-#      continue: true
-#    receivers:
-#      email_configs:
-#        - to: 'devops@example.org'
-#          send_resolved: true
+# Full configuration that will go into alertmanager.yml config file.
+#alertmanager_config: {}
 
 # OAuth
 alertmanager_oauth_service_name: '{{ alertmanager_service_name }}-oauth'
@@ -53,33 +41,6 @@ alertmanager_oauth_gh_teams: []
 alertmanager_oauth_keycloak_realm: 'logos-co'
 alertmanager_oauth_keycloak_groups: []
 alertmanager_oauth_keycloak_roles: []
-
-# Route configuration
-alertmanager_group_by: ['alertname', 'fleet']
-alertmanager_group_wait: '30s'
-alertmanager_group_interval: '3m'
-alertmanager_repeat_interval: '1h'
-
-# VictorOps paging service
-alertmanager_victorops_enabled: false
-#alertmanager_victorops_api_key: ~
-#alertmanager_victorops_service_url: ~
-#alertmanager_victorops_routing_key: ~
-alertmanager_victorops_message_type: 'CRITICAL' # CRITICAL, WARNING, INFO
-alertmanager_victorops_monitoring_tool: 'metrics'
-alertmanager_victorops_state_message: |
-  {% raw %}
-  {{ .CommonLabels.alertname }}:
-  {{ .CommonAnnotations.summary }}.
-  Common: {{ .CommonLabels }}
-  Group: {{ .GroupLabels }}
-  {% endraw %}
-
-alertmanager_victorops_display_name: >-
-  {% raw %}
-  {{ .CommonLabels.datacenter }}.{{ .GroupLabels.fleet }}
-  ({{ .GroupLabels.alertname }})
-  {% endraw %}
 
 # For discovery of prometheus master nodes
 consul_catalog_url: 'http://localhost:8500/v1/catalog'
