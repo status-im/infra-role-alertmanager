@@ -11,17 +11,22 @@
     - 'data'
     - 'conf/templates'
 
-- name: Create config files
+- name: Create amtool config file
   template:
-    src: '{{ item }}.j2'
-    dest: '{{ alertmanager_service_path }}/conf/{{ item }}'
+    src:  'amtool.yml.j2'
+    dest: '{{ alertmanager_service_path }}/conf/amtool.yml'
     owner: 'dockremap'
     group: 'docker'
     mode: 0640
-  register: alertmanager_config
-  with_items:
-    - 'alertmanager.yml'
-    - 'amtool.yml'
+
+- name: Create main config file
+  register: alertmanager_config_file
+  copy:
+    dest:    '{{ alertmanager_service_path }}/conf/alertmanager.yml'
+    content: '{{ alertmanager_config | mandatory | to_nice_yaml }}'
+    owner:   'dockremap'
+    group:   'docker'
+    mode:    0640
 
 - name: Create template file
   copy:

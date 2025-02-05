@@ -5,23 +5,36 @@ This role configures [AlertManager](https://prometheus.io/docs/alerting/alertman
 # Configuration
 
 The bare minimum should be:
-```yml
+```yaml
 alertmanager_domain: 'alerts.example.org'
-alertmanager_admin_email: 'admin@example.org'
+alertmanager_config
+  global:
+    smtp_from:          'alerts@example.org'
+    smtp_smarthost:     'smtp.mail.example.org'
+    smtp_auth_username: 'secret-smtp-user'
+    smtp_auth_password: 'secret-smtp-pass'
+    smtp_require_tls: true
 
-# SMTP fallback
-alertmanager_admin_email: 'admin@example.org'
-alertmanager_smtp_host: smtp.mail.example.org'
-alertmanager_smtp_from: 'alerts@example.org'
-alertmanager_smtp_user: 'secret-smtp-user'
-alertmanager_smtp_pass: 'secret-smtp-pass'
-
-# VictorOps API
-alertmanager_victorops_api_key: 'secret-victorops-api-key'
-alertmanager_victorops_routing_key:  'alert-manager'
-alertmanager_victorops_service_url: 'https://alert.victorops.com/integrations/generic/123123123/alert/'
+  receivers:
+    - name: 'admin-email'
+      email_configs:
+        - to: 'admin@example.org'
+          send_resolved: true
 ```
-Take note you will have to create an `alert-manager` routing rule in VictorOps.
+To use VictorOps you will need to create an `alert-manager` routing rule:
+```yaml
+alertmanager_config
+  receivers:
+    - name: 'victorops-alerts-critical'
+      victorops_configs:
+        message_type:    'CRITICAL'
+        routing_key:     'alert-manager'
+        monitoring_tool: 'Prometheus'
+        entity_display_name: >-
+          {% raw %}
+          {{ .CommonLabels.datacenter }}.{{ .GroupLabels.fleet }} ({{ .GroupLabels.alertname }})
+          {% endraw %}
+```
 
 There is also optional OAuth Proxy configuration:
 ```yaml
