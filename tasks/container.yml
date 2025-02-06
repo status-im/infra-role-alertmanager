@@ -34,4 +34,4 @@
     files: ['{{ alertmanager_compose_file }}', '{{ alertmanager_oauth_compose_file }}']
     recreate: '{{ compose_recreate }}'
     pull:     '{{ compose_pull }}'
-    state:    '{{ "restarted" if alertmanager_config.changed else compose_state }}'
+    state:    '{{ "restarted" if alertmanager_config_file.changed else compose_state }}'
