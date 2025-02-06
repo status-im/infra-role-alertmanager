@@ -7,12 +7,12 @@
       - name: '{{ alertmanager_service_name }}'
         tags: ['metrics', 'alertmanager']
         port: '{{ alertmanager_webui_port }}'
-        address: '{{ ansible_local.wireguard.vpn_ip }}'
+        address: '{{ ansible_local.wireguard.address }}'
         checks:
           - id:   '{{ alertmanager_service_name }}-health'
             name: 'Alert Manager Health'
             type: 'http'
-            http: 'http://localhost:{{ alertmanager_webui_port }}/api/v1/receivers'
+            http: 'http://localhost:{{ alertmanager_webui_port }}/-/healthy'
 
 # We need to do this for discover step to work
 - name: Reload Consul right away
